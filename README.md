@@ -18,14 +18,19 @@ oc new-project local-dev
 
 ```bash
 oc -n openshift-monitoring get configmap cluster-monitoring-config
-```
-
-```bash
 Error from server (NotFound): configmaps "cluster-monitoring-config" not found
 ```
-
 ### Enbable UserWorkload
 
 ```bash
 oc apply -f cluster-monitoring-config.yaml
+configmap/cluster-monitoring-config created
 ```
+
+### Verify pods openshift-user-workload-monitoring
+
+```bash
+oc get pods -n openshift-user-workload-monitoring
+```
+
+![Pods openshift-user-workload-monitoring](/images/openshift-user-workload-monitoring.png "Pods openshift-user-workload-monitoring")
