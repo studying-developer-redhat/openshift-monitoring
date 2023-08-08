@@ -49,3 +49,7 @@ oc -n local-dev new-app \
 ``` 
 
 ![create-database](/images/create-database.png "create-database")
+
+### RHOCP PVC 1GiB
+
+![local-dev-pvc-mysql](/images/local-dev-pvc-mysql.png "local-dev-pvc-mysql")
