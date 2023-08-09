@@ -53,3 +53,26 @@ oc -n local-dev new-app \
 ### RHOCP PVC 1GiB
 
 ![local-dev-pvc-mysql](/images/local-dev-pvc-mysql.png "local-dev-pvc-mysql")
+
+### Metrics
+
+![metrics-pvc-total-and-consumer-capacity](/images/metrics-pvc-total-and-consumer-capacity.png "metrics-pvc-total-and-consumer-capacity")
+
+### Free capacity
+
+``` bash
+sum(kubelet_volume_stats_capacity_bytes * on (persistentvolumeclaim, namespace) group_left kube_persistentvolumeclaim_info{namespace="local-dev"}) by (persistentvolumeclaim, namespace) / 1024^3 - 
+sum(kubelet_volume_stats_used_bytes * on (persistentvolumeclaim, namespace) group_left kube_persistentvolumeclaim_info{namespace="local-dev"}) by (persistentvolumeclaim, namespace) / 1024^3
+```
+
+#### Total capacity
+
+``` bash
+sum(kubelet_volume_stats_capacity_bytes * on (persistentvolumeclaim, namespace) group_left kube_persistentvolumeclaim_info{namespace="local-dev"}) by (persistentvolumeclaim, namespace) / 1024^3
+``` 
+
+#### Used capacity
+
+``` bash
+sum(kubelet_volume_stats_used_bytes * on (persistentvolumeclaim, namespace) group_left kube_persistentvolumeclaim_info{namespace="local-dev"}) by (persistentvolumeclaim, namespace) / 1024^3
+```
