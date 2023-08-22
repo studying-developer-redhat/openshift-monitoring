@@ -61,8 +61,7 @@ oc -n local-dev new-app \
 ### Free capacity
 
 ``` bash
-sum(kubelet_volume_stats_capacity_bytes * on (persistentvolumeclaim, namespace) group_left kube_persistentvolumeclaim_info{namespace="local-dev"}) by (persistentvolumeclaim, namespace) / 1024^3 - 
-sum(kubelet_volume_stats_used_bytes * on (persistentvolumeclaim, namespace) group_left kube_persistentvolumeclaim_info{namespace="local-dev"}) by (persistentvolumeclaim, namespace) / 1024^3
+sum(kubelet_volume_stats_capacity_bytes * on (persistentvolumeclaim, namespace) group_left kube_persistentvolumeclaim_info{namespace="local-dev"}) by (persistentvolumeclaim, namespace) / 1024^3 - sum(kubelet_volume_stats_used_bytes * on (persistentvolumeclaim, namespace) group_left kube_persistentvolumeclaim_info{namespace="local-dev"}) by (persistentvolumeclaim, namespace) / 1024^3
 ```
 
 #### Total capacity

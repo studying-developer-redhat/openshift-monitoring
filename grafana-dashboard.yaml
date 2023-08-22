@@ -1,0 +1,119 @@
+apiVersion: integreatly.org/v1alpha1
+kind: GrafanaDashboard
+metadata:
+  labels:
+    app: grafana
+  name: monitoring-pv-dashboard
+  namespace: grafana
+spec:
+  json: |
+    {
+      "annotations": {
+        "list": [
+          {
+            "builtIn": 1,
+            "datasource": "-- Grafana --",
+            "enable": true,
+            "hide": true,
+            "iconColor": "rgba(0, 211, 255, 1)",
+            "name": "Annotations & Alerts",
+            "type": "dashboard"
+          }
+        ]
+      },
+      "editable": true,
+      "gnetId": null,
+      "graphTooltip": 0,
+      "id": 1,
+      "links": [],
+      "panels": [
+        {
+          "datasource": null,
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 0,
+            "y": 0
+          },
+          "id": 2,
+          "options": {
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showThresholdLabels": false,
+            "showThresholdMarkers": true,
+            "text": {}
+          },
+          "pluginVersion": "7.5.17",
+          "targets": [
+            {
+              "exemplar": true,
+              "expr": "sum(kubelet_volume_stats_capacity_bytes * on (persistentvolumeclaim, namespace) group_left kube_persistentvolumeclaim_info{namespace=\"local-dev\"}) by (persistentvolumeclaim, namespace) / 1024^3 - sum(kubelet_volume_stats_used_bytes * on (persistentvolumeclaim, namespace) group_left kube_persistentvolumeclaim_info{namespace=\"local-dev\"}) by (persistentvolumeclaim, namespace) / 1024^3",
+              "interval": "",
+              "legendFormat": "Free capacity",
+              "refId": "A"
+            },
+            {
+              "exemplar": true,
+              "expr": "sum(kubelet_volume_stats_capacity_bytes * on (persistentvolumeclaim, namespace) group_left kube_persistentvolumeclaim_info{namespace=\"local-dev\"}) by (persistentvolumeclaim, namespace) / 1024^3",
+              "hide": false,
+              "interval": "",
+              "legendFormat": "Total capacity",
+              "refId": "B"
+            },
+            {
+              "exemplar": true,
+              "expr": "sum(kubelet_volume_stats_used_bytes * on (persistentvolumeclaim, namespace) group_left kube_persistentvolumeclaim_info{namespace=\"local-dev\"}) by (persistentvolumeclaim, namespace) / 1024^3",
+              "hide": false,
+              "interval": "",
+              "legendFormat": "Used capacity",
+              "refId": "C"
+            }
+          ],
+          "title": "Monitoring PV",
+          "type": "gauge"
+        }
+      ],
+      "schemaVersion": 27,
+      "style": "dark",
+      "tags": [],
+      "templating": {
+        "list": []
+      },
+      "time": {
+        "from": "now-6h",
+        "to": "now"
+      },
+      "timepicker": {},
+      "timezone": "",
+      "title": "Monitoring PV Mysql",
+      "uid": "kz4HMxRIz",
+      "version": 1
+    }
+  name: monitoring-pv-dashboard.json

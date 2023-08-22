@@ -1,0 +1,17 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: coin-toss-api-sm
+  namespace: local-dev
+spec:
+  endpoints:
+    - interval: 5s
+      path: /q/metrics
+      port: 8080-tcp
+      scheme: http
+  namespaceSelector:
+    matchNames:
+      - local-dev
+  selector:
+    matchLabels:
+      app: coin-toss-api

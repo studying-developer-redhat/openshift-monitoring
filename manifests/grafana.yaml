@@ -1,0 +1,15 @@
+apiVersion: grafana.integreatly.org/v1beta1
+kind: Grafana
+metadata:
+  name: my-grafana
+  namespace: local-dev
+  config:
+    metrics:
+      basic_auth_password: admin
+      basic_auth_username: password
+      enabled: true
+    security:
+      admin_password: password
+      admin_user: admin
+  ingress:
+    enabled: true

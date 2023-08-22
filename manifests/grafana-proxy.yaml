@@ -1,0 +1,37 @@
+apiVersion: v1
+data:
+  session_secret: Y2hhbmdlIG1lCg==
+kind: Secret
+metadata:
+  name: grafana-k8s-proxy
+type: Opaque
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: grafana-proxy
+  namespace: local-dev
+rules:
+  - apiGroups: ["authentication.k8s.io"]
+    resources: ["tokenreviews", "subjectaccessreviews"]
+    verbs: ["create"] 
+---
+apiVersion: authorization.openshift.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: grafana-proxy
+roleRef:
+  name: grafana-proxy
+subjects:
+  - kind: ServiceAccount
+name: grafana-serviceaccount
+namespace: local-dev
+userNames:
+  - system:serviceaccount:local-dev:grafana-serviceaccount
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+config.openshift.io/inject-trusted-cabundle: "true"
+  name: ocp-injected-certs
